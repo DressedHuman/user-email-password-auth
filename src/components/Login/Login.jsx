@@ -36,6 +36,10 @@ const Login = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then(result => {
                 console.log(result.user);
+                if (!result.user.emailVerified) {
+                    alert("Verify your email before login! :/");
+                    return;
+                }
                 setSuccessMessage('User Login Successful :)')
                 setUser(result.user);
             })
@@ -80,7 +84,11 @@ const Login = () => {
                 <input type="submit" className="btn btn-primary mx-auto text-xl font-semibold capitalize" value="Login" />
             </form>
             {
-                (successMessage && <div><p className="text-green-700 text-xl text-center my-3">{successMessage}</p><h2 className="text-black text-xl text-center font-semibold">Welcome, <span className="text-green-700 text-2xl">{user.displayName || user.email}!</span></h2></div>) || (forgotError && <p className="text-red-700 text-xl text-center my-3">{forgotError}</p>) || (loginError ? <><p className="text-red-700 text-xl text-center my-3">{loginError}</p><p className="text-center">New to this website? Register <Link className="text-lg font-medium" to={'/register'}>Here</Link></p></> : <p className="text-center">New to this website? Register <Link className="text-lg font-medium" to={'/register'}>Here</Link></p>)
+                (successMessage && <div>
+                    <p className="text-green-700 text-xl text-center my-3">{successMessage}</p>
+                    <img src={user.photoURL} alt="" />
+                    <h2 className="text-black text-xl text-center font-semibold">Welcome, <span className="text-green-700 text-2xl">{user.displayName || user.email}!</span></h2>
+                </div>) || (forgotError && <p className="text-red-700 text-xl text-center my-3">{forgotError}</p>) || (loginError ? <><p className="text-red-700 text-xl text-center my-3">{loginError}</p><p className="text-center">New to this website? Register <Link className="text-lg font-medium" to={'/register'}>Here</Link></p></> : <p className="text-center">New to this website? Register <Link className="text-lg font-medium" to={'/register'}>Here</Link></p>)
             }
         </div>
     );
