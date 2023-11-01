@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import auth from "../../firebase/firebase.config";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Register = () => {
     const [registerError, setRegisterError] = useState('');
@@ -54,10 +55,10 @@ const Register = () => {
                 </div>
                 <label htmlFor="terms" className="flex gap-4 justify-center items-center text-lg"><input type="checkbox" name="terms" id="terms" />Accept our terms and conditions.</label>
                 <br />
-                <input type="submit" className="btn btn-primary mx-auto text-xl font-semibold capitalize" value="Submit" />
+                <input type="submit" className="btn btn-primary mx-auto text-xl font-semibold capitalize" value="Register" />
             </form>
             {
-                (successMessage && <p className="text-green-700 text-xl text-center my-3">{successMessage}</p>) || (registerError && <p className="text-red-700 text-xl text-center my-3">{registerError}</p>)
+                (successMessage && <><p className="text-green-700 text-xl text-center my-3">{successMessage}</p><p className="text-center">Login <Link className="text-lg font-medium" to={'/login'}>Here</Link></p></>) || (registerError ? <><p className="text-red-700 text-xl text-center my-3">{registerError}</p><p className="text-center">Already have an account? Login <Link className="text-lg font-medium" to={'/login'}>Here</Link></p></> : <p className="text-center">Already have an account? Login <Link className="text-lg font-medium" to={'/login'}>Here</Link></p>)
             }
         </div>
     );
